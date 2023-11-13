@@ -4,20 +4,15 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import CountryInfo from './components/country-info/index.tsx';
+import Header from './components/header/index.tsx';
 import './index.css';
 import ThemeProvider from './providers/ThemeProvider.tsx';
-import Header from './components/header/index.tsx';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <>
-        <Header />
-        <App />
-      </>
-    ),
+    element: <App />,
   },
   {
     path: '/:countryName',

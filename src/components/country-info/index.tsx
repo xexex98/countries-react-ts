@@ -146,18 +146,15 @@ export default function CountryInfo() {
             <div className="flex flex-wrap gap-3 items-center ">
               <p className="font-bold">Border Countries: </p>
               {(info.borders?.length > 0 &&
-                info.borders.map((border) => (
-                  <>
-                    <Link
-                      to={`/${border}`}
-                      key={border}
-                      className="rounded bg-elements-light dark:bg-elements-dark px-4 py-1 shadow-md hover:bg-gray-100 dark:bg-element-dark dark:hover:border dark:hover:border-white"
-                    >
-                      {border}
-                    </Link>
-                  </>
-                ))) ||
-                'None'}
+                info.borders.map((border, index) => (
+                  <Link
+                    to={`/${border}`}
+                    key={info.cca3 + index}
+                    className="rounded bg-elements-light dark:bg-elements-dark px-4 py-1 shadow-md hover:bg-gray-100 dark:bg-element-dark dark:hover:border dark:hover:border-white"
+                  >
+                    {border}
+                  </Link>
+                ))) || <p key={info.cca3}>Empty</p>}
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import { CountryType, useFilter, useSearch } from '../../store/useStore';
 import Loading from '../../svg/Loading';
 import Country from '../country';
+import { useEffect, useState } from 'react';
 
 export default function Countries() {
   const { data, isLoading, isError } = useQuery<CountryType[]>(
@@ -14,6 +15,7 @@ export default function Countries() {
     },
     { refetchOnWindowFocus: false },
   );
+  const [count, setCount] = useState<number>(12);
 
   const { filter } = useFilter();
   const { search } = useSearch();
@@ -26,9 +28,26 @@ export default function Countries() {
     );
   });
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + Math.round(window.scrollY) >=
+          document.body.offsetHeight - 100 &&
+        data &&
+        count < data?.length
+      ) {
+        setCount((prev) => (prev += 12));
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [data, count]);
+
   if (isLoading) {
     return (
-      <div className="mx-auto container flex-grow">
+      <div className="mx-auto container flex-grow flex flex-col justify-center">
         <div className="flex justify-center items-center text-center h-full">
           <Loading />
         </div>
@@ -60,12 +79,14 @@ export default function Countries() {
     <div className="container mx-auto flex-grow">
       <div className="flex flex-col items-center p-4 sm:grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {info?.map((country, index) => {
-          return (
-            <Country
-              country={country}
-              key={index}
-            />
-          );
+          if (index < count) {
+            return (
+              <Country
+                country={country}
+                key={country.cca3}
+              />
+            );
+          }
         })}
       </div>
     </div>
