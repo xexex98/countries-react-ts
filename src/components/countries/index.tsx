@@ -3,7 +3,6 @@ import { useQuery } from 'react-query';
 import { CountryType, useFilter, useSearch } from '../../store/useStore';
 import Loading from '../../svg/Loading';
 import Country from '../country';
-import Wrapper from '../wrapper';
 
 export default function Countries() {
   const { data, isLoading, isError } = useQuery<CountryType[]>(
@@ -27,7 +26,7 @@ export default function Countries() {
     );
   });
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="mx-auto container flex-grow">
         <div className="flex justify-center items-center text-center h-full">
@@ -35,23 +34,28 @@ export default function Countries() {
         </div>
       </div>
     );
+  }
 
-  if (isError)
+  if (isError) {
     return (
       <p className="text-texts-light dark:text-texts-dark">
         Error fetching data
       </p>
     );
+  }
 
   if (!info?.length) {
     return (
-      <Wrapper>
-        <p className="text-center mt-10 text-texts-light dark:text-texts-dark">
-          Country does not exist
-        </p>
-      </Wrapper>
+      <div className="mx-auto container flex-grow">
+        <div className="flex justify-center items-center text-center h-full">
+          <p className="text-center mt-10 text-texts-light dark:text-texts-dark">
+            Country does not exist
+          </p>
+        </div>
+      </div>
     );
   }
+
   return (
     <div className="container mx-auto flex-grow">
       <div className="flex flex-col items-center p-4 sm:grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

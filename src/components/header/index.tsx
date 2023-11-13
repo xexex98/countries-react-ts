@@ -3,6 +3,7 @@ import { ThemeContext } from '../../providers/ThemeProvider';
 import { Dark } from '../../svg/Dark';
 import { Light } from '../../svg/Light';
 import Wrapper from '../wrapper';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -29,7 +30,12 @@ export default function Header() {
     <div className="bg-elements-light dark:bg-elements-dark dark:text-texts-dark">
       <Wrapper>
         <div className="p-4 flex justify-between">
-          <p className="font-extrabold">Where is the world?</p>
+          <Link
+            to={'/'}
+            className="font-extrabold"
+          >
+            Where is the world?
+          </Link>
           <div
             className="text-sm flex gap-2 cursor-pointer items-center"
             onClick={toggleTheme}
